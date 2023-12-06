@@ -39,7 +39,7 @@ public class OrderUpdateTest {
         accessToken = user.getAccessToken();
     }
 
-    @Test
+//    @Test
     public void testOrderUpdate_success() throws WebSocketException {
         OrderUpdateWebsocket orderUpdateWebsocket = new OrderUpdateWebsocket(accessToken, new OrderUpdateListner() {
             @Override

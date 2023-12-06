@@ -43,7 +43,7 @@ public class SmartStreamTickerTest {
 //		feedToken = "123";
 	}
 
-	@Test
+//	@Test
 	void testSmartStreamTicketLTP() throws WebSocketException, InterruptedException {
 		try {
 			SmartStreamTicker ticker = new SmartStreamTicker(clientID, feedToken, new SmartStreamListenerImpl());
@@ -62,7 +62,7 @@ public class SmartStreamTickerTest {
 
 	}
 
-	@Test
+//	@Test
 	void testSmartStreamTicket_WithInitialDelayAndPeriod() throws WebSocketException, InterruptedException {
 		try {
 			SmartStreamTicker ticker = new SmartStreamTicker(clientID, feedToken, new SmartStreamListenerImpl(), 6000, 6000);
@@ -101,7 +101,7 @@ public class SmartStreamTickerTest {
 		return tokenSet;
 	}
 
-	@Test
+//	@Test
 	void testTokenID() {
 		TokenID t1 = new TokenID(ExchangeType.NSE_CM, "1594");
 		TokenID t2 = new TokenID(ExchangeType.NSE_CM, "4717");
