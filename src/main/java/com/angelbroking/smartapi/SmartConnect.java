@@ -4,6 +4,7 @@ import com.angelbroking.smartapi.http.SessionExpiryHook;
 import com.angelbroking.smartapi.http.SmartAPIRequestHandler;
 import com.angelbroking.smartapi.http.exceptions.SmartAPIException;
 import com.angelbroking.smartapi.models.*;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.json.JSONArray;
@@ -26,8 +27,9 @@ import static com.angelbroking.smartapi.utils.Constants.SMART_API_EXCEPTION_OCCU
 @Slf4j
 public class SmartConnect {
 	public static SessionExpiryHook sessionExpiryHook = null;
-	public static boolean ENABLE_LOGGING = false;
+	public static boolean ENABLE_LOGGING = true;
 	private Proxy proxy = null;
+	@Setter
 	private String apiKey;
 	private String accessToken;
 	private String refreshToken;
@@ -47,10 +49,6 @@ public class SmartConnect {
 		this.apiKey = apiKey;
 		this.accessToken = accessToken;
 		this.refreshToken = refreshToken;
-	}
-
-	public void setApiKey(String apiKey) {
-		this.apiKey = apiKey;
 	}
 
 	/**
