@@ -237,7 +237,7 @@ public class SmartAPIRequestHandler {
             throws IOException, SmartAPIException {
         Request request = createGetRequest(apiKey, url, accessToken);
         Response response = client.newCall(request).execute();
-        if (Objects.nonNull(response.body())) {
+        if (Objects.nonNull(response) && Objects.nonNull(response.body())) {
             String body = response.body().string();
             return new SmartAPIResponseHandler().handle(response, body);
         }
