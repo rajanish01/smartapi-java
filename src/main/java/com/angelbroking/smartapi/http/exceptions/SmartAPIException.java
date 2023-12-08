@@ -5,27 +5,25 @@ package com.angelbroking.smartapi.http.exceptions;
  * code that is received from Angel Connect api.
  */
 
-public class SmartAPIException extends Throwable {
+public class SmartAPIException extends Exception {
 
-	private static final long serialVersionUID = 1L;
-	// variables
-	public String message;
-	public String code;
+    private static final long serialVersionUID = 1L;
+    public String code;
+    public String message;
 
-	// constructor that sets the message and code
-	public SmartAPIException(String message, String code) {
-		this.message = message;
-		this.code = code;
-	}
+    public SmartAPIException(String message, String code) {
+        super(message);
+        this.code = code;
+        this.message = message;
+    }
 
-	// constructor that sets the message
-	public SmartAPIException(String message) {
-		this.message = message;
-	}
+    public SmartAPIException(String message) {
+        this.message = message;
+    }
 
-	@Override
-	public String toString() {
-		return "SmartAPIException [message=" + message + ", code=" + code + "]";
-	}
+    @Override
+    public String toString() {
+        return "SmartAPIException [message=" + message + ", code=" + code + "]";
+    }
 
 }
