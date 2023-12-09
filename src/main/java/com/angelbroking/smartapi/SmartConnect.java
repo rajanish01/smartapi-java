@@ -4,6 +4,7 @@ import com.angelbroking.smartapi.http.SessionExpiryHook;
 import com.angelbroking.smartapi.http.SmartAPIRequestHandler;
 import com.angelbroking.smartapi.http.exceptions.SmartAPIException;
 import com.angelbroking.smartapi.models.*;
+import com.angelbroking.smartapi.utils.Utils;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -14,6 +15,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.Proxy;
 import java.util.List;
+import java.util.Objects;
 
 import static com.angelbroking.smartapi.utils.Constants.*;
 
@@ -533,37 +535,36 @@ public class SmartConnect {
      * @return Gtt contains only orderId.
      */
 
-    public Gtt gttCreateRule(GttParams gttParams) {
+    public Gtt gttCreateRule(Gtt gttParams) {
         Gtt gtt = null;
         try {
             String url = routes.get("api.gtt.create");
-
             JSONObject params = new JSONObject();
+            if (gttParams.getTradingSymbol() != null)
+                params.put("tradingsymbol", gttParams.getTradingSymbol());
+            if (gttParams.getSymbolToken() != null)
+                params.put("symboltoken", gttParams.getSymbolToken());
+            if (gttParams.getExchange() != null)
+                params.put("exchange", gttParams.getExchange());
+            if (gttParams.getTransactionType() != null)
+                params.put("transactiontype", gttParams.getTransactionType());
+            if (gttParams.getProductType() != null)
+                params.put("producttype", gttParams.getProductType());
+            if (gttParams.getPrice() != null)
+                params.put("price", gttParams.getPrice());
+            if (gttParams.getQuantity() != null)
+                params.put("qty", gttParams.getQuantity());
+            if (gttParams.getTriggerPrice() != null)
+                params.put("triggerprice", gttParams.getTriggerPrice());
+            if (gttParams.getDisclosedQty() != null)
+                params.put("disclosedqty", gttParams.getDisclosedQty());
+            if (gttParams.getTimePeriod() != null)
+                params.put("timeperiod", gttParams.getTimePeriod());
 
-            if (gttParams.tradingsymbol != null)
-                params.put("tradingsymbol", gttParams.tradingsymbol);
-            if (gttParams.symboltoken != null)
-                params.put("symboltoken", gttParams.symboltoken);
-            if (gttParams.exchange != null)
-                params.put("exchange", gttParams.exchange);
-            if (gttParams.transactiontype != null)
-                params.put("transactiontype", gttParams.transactiontype);
-            if (gttParams.producttype != null)
-                params.put("producttype", gttParams.producttype);
-            if (gttParams.price != null)
-                params.put("price", gttParams.price);
-            if (gttParams.qty != null)
-                params.put("qty", gttParams.qty);
-            if (gttParams.triggerprice != null)
-                params.put("triggerprice", gttParams.triggerprice);
-            if (gttParams.disclosedqty != null)
-                params.put("disclosedqty", gttParams.disclosedqty);
-            if (gttParams.timeperiod != null)
-                params.put("timeperiod", gttParams.timeperiod);
-
-            JSONObject jsonObject = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-            gtt = new Gtt();
-            gtt.id = jsonObject.getJSONObject("data").getInt("id");
+            JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
+            if (Objects.nonNull(response) && Objects.nonNull(response.getJSONObject("data"))) {
+                gtt = Utils.convertJsonObject(response.getJSONObject("data"), Gtt.class);
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -577,33 +578,31 @@ public class SmartConnect {
      * @return Gtt contains only orderId.
      */
 
-    public Gtt gttModifyRule(Integer id, GttParams gttParams) {
+    public Gtt gttModifyRule(Integer id, Gtt gttParams) {
         Gtt gtt = null;
         try {
             String url = routes.get("api.gtt.modify");
-
             JSONObject params = new JSONObject();
-
-            if (gttParams.symboltoken != null)
-                params.put("symboltoken", gttParams.symboltoken);
-            if (gttParams.exchange != null)
-                params.put("exchange", gttParams.exchange);
-            if (gttParams.price != null)
-                params.put("price", gttParams.price);
-            if (gttParams.qty != null)
-                params.put("qty", gttParams.qty);
-            if (gttParams.triggerprice != null)
-                params.put("triggerprice", gttParams.triggerprice);
-            if (gttParams.disclosedqty != null)
-                params.put("disclosedqty", gttParams.disclosedqty);
-            if (gttParams.timeperiod != null)
-                params.put("timeperiod", gttParams.timeperiod);
-
+            if (gttParams.getSymbolToken() != null)
+                params.put("symboltoken", gttParams.getSymbolToken());
+            if (gttParams.getExchange() != null)
+                params.put("exchange", gttParams.getExchange());
+            if (gttParams.getPrice() != null)
+                params.put("price", gttParams.getPrice());
+            if (gttParams.getQuantity() != null)
+                params.put("qty", gttParams.getQuantity());
+            if (gttParams.getTriggerPrice() != null)
+                params.put("triggerprice", gttParams.getTriggerPrice());
+            if (gttParams.getDisclosedQty() != null)
+                params.put("disclosedqty", gttParams.getDisclosedQty());
+            if (gttParams.getTimePeriod() != null)
+                params.put("timeperiod", gttParams.getTimePeriod());
             params.put("id", id);
 
-            JSONObject jsonObject = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-            gtt = new Gtt();
-            gtt.id = jsonObject.getJSONObject("data").getInt("id");
+            JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
+            if (Objects.nonNull(response) && Objects.nonNull(response.getJSONObject("data"))) {
+                gtt = Utils.convertJsonObject(response.getJSONObject("data"), Gtt.class);
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -626,9 +625,10 @@ public class SmartConnect {
             params.put("exchange", exchange);
 
             String url = routes.get("api.gtt.cancel");
-            JSONObject jsonObject = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-            gtt = new Gtt();
-            gtt.id = jsonObject.getJSONObject("data").getInt("id");
+            JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
+            if (Objects.nonNull(response) && Objects.nonNull(response.getJSONObject("data"))) {
+                gtt = Utils.convertJsonObject(response.getJSONObject("data"), Gtt.class);
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -642,21 +642,21 @@ public class SmartConnect {
      * @return returns the details of gtt rule.
      */
 
-    public JSONObject gttRuleDetails(Integer id) {
+    public Gtt gttRuleDetails(Integer id) {
+        Gtt gtt = null;
         try {
             JSONObject params = new JSONObject();
             params.put("id", id);
 
             String url = routes.get("api.gtt.details");
             JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-            log.info("response : {}", response);
-
-            return response.getJSONObject("data");
+            if (Objects.nonNull(response) && Objects.nonNull(response.getJSONObject("data"))) {
+                gtt = Utils.convertJsonObject(response.getJSONObject("data"), Gtt.class);
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
-            return null;
         }
-
+        return gtt;
     }
 
     /**
@@ -667,7 +667,8 @@ public class SmartConnect {
      * @param count  is the count of gtt rules
      * @return returns the detailed list of gtt rules.
      */
-    public JSONArray gttRuleList(List<String> status, Integer page, Integer count) {
+    public List<Gtt> gttRuleList(List<String> status, Integer page, Integer count) {
+        List<Gtt> gtts = null;
         try {
             JSONObject params = new JSONObject();
             params.put("status", status);
@@ -676,12 +677,13 @@ public class SmartConnect {
 
             String url = routes.get("api.gtt.list");
             JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-            log.info("response : {}", response);
-            return response.getJSONArray("data");
+            if (Objects.nonNull(response) && Objects.nonNull(response.getJSONObject("data"))) {
+                gtts = Utils.convertJsonArrayToList(response.getJSONArray("data"), Gtt.class);
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
-            return null;
         }
+        return gtts;
     }
 
     /**
@@ -762,6 +764,7 @@ public class SmartConnect {
             JSONObject params = new JSONObject();
             params.put("clientcode", this.userId);
             response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
+            response.getJSONObject("data");
         } catch (Exception e) {
             log.error(e.getMessage());
         }

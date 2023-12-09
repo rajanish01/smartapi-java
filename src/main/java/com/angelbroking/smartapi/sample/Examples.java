@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -194,39 +195,34 @@ public class Examples {
 
 	/** Create Gtt Rule */
 	public void createRule(SmartConnect smartConnect) throws SmartAPIException, IOException {
-		GttParams gttParams = new GttParams();
-
-		gttParams.tradingsymbol = "SBIN-EQ";
-		gttParams.symboltoken = "3045";
-		gttParams.exchange = "NSE";
-		gttParams.producttype = "MARGIN";
-		gttParams.transactiontype = "BUY";
-		gttParams.price = 100000.01;
-		gttParams.qty = 10;
-		gttParams.disclosedqty = 10;
-		gttParams.triggerprice = 20000.1;
-		gttParams.timeperiod = 300;
-
+		Gtt gttParams = Gtt.builder()
+				.tradingSymbol("SBIN-EQ")
+				.symbolToken("3045")
+				.exchange("NSE")
+				.productType("MARGIN")
+				.transactionType("BUY")
+				.price(BigDecimal.valueOf(100000.01))
+				.disclosedQty(10)
+				.triggerPrice(BigDecimal.valueOf(20000.1))
+				.timePeriod(300)
+				.build();
 		Gtt gtt = smartConnect.gttCreateRule(gttParams);
 	}
 
 	/** Modify Gtt Rule */
 	public void modifyRule(SmartConnect smartConnect) throws SmartAPIException, IOException {
-		GttParams gttParams = new GttParams();
-
-		gttParams.tradingsymbol = "SBIN-EQ";
-		gttParams.symboltoken = "3045";
-		gttParams.exchange = "NSE";
-		gttParams.producttype = "MARGIN";
-		gttParams.transactiontype = "BUY";
-		gttParams.price = 100000.1;
-		gttParams.qty = 10;
-		gttParams.disclosedqty = 10;
-		gttParams.triggerprice = 20000.1;
-		gttParams.timeperiod = 300;
-
+		Gtt gttParams = Gtt.builder()
+				.tradingSymbol("SBIN-EQ")
+				.symbolToken("3045")
+				.exchange("NSE")
+				.productType("MARGIN")
+				.transactionType("BUY")
+				.price(BigDecimal.valueOf(100000.01))
+				.disclosedQty(10)
+				.triggerPrice(BigDecimal.valueOf(20000.1))
+				.timePeriod(300)
+				.build();
 		Integer id = 1000051;
-
 		Gtt gtt = smartConnect.gttModifyRule(id, gttParams);
 	}
 
@@ -243,7 +239,7 @@ public class Examples {
 	public void ruleDetails(SmartConnect smartConnect) throws SmartAPIException, IOException {
 		Integer id = 1000051;
 
-		JSONObject gtt = smartConnect.gttRuleDetails(id);
+		Gtt gtt = smartConnect.gttRuleDetails(id);
 	}
 
 	/** Gtt Rule Lists */
@@ -262,7 +258,7 @@ public class Examples {
 		Integer page = 1;
 		Integer count = 10;
 
-		JSONArray gtt = smartConnect.gttRuleList(status, page, count);
+		List<Gtt> gtt = smartConnect.gttRuleList(status, page, count);
 	}
 
 	/** Historic Data */

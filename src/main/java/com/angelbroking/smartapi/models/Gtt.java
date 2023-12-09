@@ -1,46 +1,49 @@
 package com.angelbroking.smartapi.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Gtt {
-	@SerializedName("id")
-	public Integer id;
-
-	@SerializedName("tradingsymbol")
-	public String tradingSymbol;
-
-	@SerializedName("symboltoken")
-	public String symbolToken;
-
-	@SerializedName("exchange")
-	public String exchange;
-
-	@SerializedName("transactiontype")
-	public String transactionType;
-
-	@SerializedName("producttype")
-	public String productType;
-
-	@SerializedName("price")
-	public Integer price;
-
-	@SerializedName("quantity")
-	public Integer quantity;
-
-	@SerializedName("triggerprice")
-	public Integer triggerPrice;
-
-	@SerializedName("disclosedqty")
-	public Integer disclosedQty;
-
-	@SerializedName("timeperiod")
-	public Integer timePeriod;
-	
-	@Override
-	public String toString() {
-		return "Gtt [id=" + id + ", tradingSymbol=" + tradingSymbol + ", symbolToken="
-				+ symbolToken + ", exchange=" + exchange + ", transactionType=" + transactionType + ", productType=" + productType
-				+ ", price=" + price + ", quantity=" + quantity + ", triggerPrice=" + triggerPrice + ", disclosedQty=" + disclosedQty
-				+ ", timePeriod=" + timePeriod + "]";
-	}
+	@JsonProperty("id")
+	private Integer id;
+	@JsonProperty("tradingsymbol")
+	private String tradingSymbol;
+	@JsonProperty("symboltoken")
+	private String symbolToken;
+	@JsonProperty("exchange")
+	private String exchange;
+	@JsonProperty("transactiontype")
+	private String transactionType;
+	@JsonProperty("producttype")
+	private String productType;
+	@JsonProperty("price")
+	private BigDecimal price;
+	@JsonProperty("quantity")
+	private Integer quantity;
+	@JsonProperty("triggerprice")
+	private BigDecimal triggerPrice;
+	@JsonProperty("disclosedqty")
+	private Integer disclosedQty;
+	@JsonProperty("timeperiod")
+	private Integer timePeriod;
+	@JsonProperty("status")
+	private String status;
+	@JsonProperty("createddate")
+	private String createdDate;
+	@JsonProperty("updateddate")
+	private String updatedDate;
+	@JsonProperty("expirydate")
+	private String expiryDate;
+	@JsonProperty("clientid")
+	private String clientId;
 }
