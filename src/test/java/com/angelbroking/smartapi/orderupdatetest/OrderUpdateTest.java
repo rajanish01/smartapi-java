@@ -23,7 +23,7 @@ public class OrderUpdateTest {
     private static String totp;
 
     @BeforeAll
-    public void init(){
+    public void init() throws Exception {
         clientID = System.getProperty("clientID");
         clientPass = System.getProperty("clientPass");
         apiKey = System.getProperty("apiKey");

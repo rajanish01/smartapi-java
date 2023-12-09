@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoginWithTOTPSample {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		String clientID = System.getProperty("clientID");
 		String clientPass = System.getProperty("clientPass");
 		String apiKey = System.getProperty("apiKey");

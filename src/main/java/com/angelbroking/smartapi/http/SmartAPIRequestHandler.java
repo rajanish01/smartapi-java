@@ -143,7 +143,7 @@ public class SmartAPIRequestHandler {
      * @throws JSONException     is thrown for parsing errors.
      */
     public JSONObject postRequest(String apiKey, String url, JSONObject params, String accessToken)
-            throws IOException, SmartAPIException, JSONException {
+            throws Exception {
         Request request = createPostRequest(apiKey, url, params, accessToken);
         Response response = client.newCall(request).execute();
         String body = response.body().string();
@@ -164,7 +164,7 @@ public class SmartAPIRequestHandler {
      * @throws JSONException     is thrown for parsing errors.
      */
     public JSONObject postRequestJSON(String url, JSONArray jsonArray, String apiKey, String accessToken)
-            throws IOException, SmartAPIException, JSONException {
+            throws Exception {
         Request request = createJsonPostRequest(url, jsonArray, apiKey, accessToken);
         Response response = client.newCall(request).execute();
         if (Objects.nonNull(response.body())) {
@@ -188,7 +188,7 @@ public class SmartAPIRequestHandler {
      * @throws JSONException     is thrown for parsing errors.
      */
     public JSONObject putRequest(String url, Map<String, Object> params, String apiKey, String accessToken)
-            throws IOException, SmartAPIException, JSONException {
+            throws Exception {
         Request request = createPutRequest(url, params, apiKey, accessToken);
         Response response = client.newCall(request).execute();
         String body = response.body().string();
@@ -210,7 +210,7 @@ public class SmartAPIRequestHandler {
      * @throws JSONException     is thrown for parsing errors.
      */
     public JSONObject deleteRequest(String url, Map<String, Object> params, String apiKey, String accessToken)
-            throws IOException, SmartAPIException, JSONException {
+            throws Exception {
         Request request = createDeleteRequest(url, params, apiKey, accessToken);
         Response response = client.newCall(request).execute();
         String body = response.body().string();
@@ -234,7 +234,7 @@ public class SmartAPIRequestHandler {
      * @throws JSONException     is thrown for parsing errors.
      */
     public JSONObject getRequest(String apiKey, String url, String accessToken)
-            throws IOException, SmartAPIException {
+            throws Exception {
         Request request = createGetRequest(apiKey, url, accessToken);
         Response response = client.newCall(request).execute();
         if (Objects.nonNull(response) && Objects.nonNull(response.body())) {

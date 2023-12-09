@@ -28,7 +28,7 @@ public class SmartStreamTickerTest {
 	private static String totp;
 
 	@BeforeAll
-	public static void initClass() throws InterruptedException {
+	public static void initClass() throws Exception {
 		clientID = System.getProperty("clientID");
 		clientPass = System.getProperty("clientPass");
 		apiKey = System.getProperty("apiKey");

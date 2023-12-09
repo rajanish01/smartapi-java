@@ -26,13 +26,13 @@ public class SmartAPIResponseHandler {
 
     private static final String EMPTY_STRING = "";
 
-    public JSONObject handle(Response response, String body) throws IOException, SmartAPIException, JSONException {
+    public JSONObject handle(Response response, String body) throws Exception {
         if (Objects.requireNonNull(response.header("Content-Type")).contains("json")) {
             JSONObject jsonObject = new JSONObject(body);
             if (!jsonObject.getString("errorcode").equals(EMPTY_STRING)) {
-                throw dealWithException(jsonObject, jsonObject.getString("errorcode"));
+                dealWithException(jsonObject, jsonObject.getString("errorcode"));
             } else if (!jsonObject.getString("errorcode").equals(EMPTY_STRING)) {
-                throw dealWithException(jsonObject, jsonObject.getString("errorCode"));
+                dealWithException(jsonObject, jsonObject.getString("errorCode"));
             }
             return jsonObject;
         } else {
@@ -42,8 +42,7 @@ public class SmartAPIResponseHandler {
         }
     }
 
-    private SmartAPIException dealWithException(JSONObject jsonObject, String code) throws JSONException {
-
+    private void dealWithException(JSONObject jsonObject, String code) throws Exception {
         switch (code) {
             // if there is a token exception, generate a signal to logout the user.
             case "AG8003":
@@ -53,23 +52,19 @@ public class SmartAPIResponseHandler {
                 if (SmartConnect.sessionExpiryHook != null) {
                     SmartConnect.sessionExpiryHook.sessionExpired();
                 }
-                return new TokenException(jsonObject.getString("message"), code);
-
+                throw new TokenException(jsonObject.getString("message"), code);
             case "AG8001":
-                return new TokenException(TOKEN_EXCEPTION_MESSAGE, code);
+                throw new TokenException(TOKEN_EXCEPTION_MESSAGE, code);
             case "AG8002":
-                return new DataException(jsonObject.getString("message"), code);
-
+                throw new DataException(jsonObject.getString("message"), code);
             case "AB1004":
             case "AB2000":
-                return new GeneralException(jsonObject.getString("message"), code);
-
+                throw new GeneralException(jsonObject.getString("message"), code);
             case "AB1003":
             case "AB1005":
             case "AB1012":
             case "AB1002":
-                return new InputException(jsonObject.getString("message"), code);
-
+                throw new InputException(jsonObject.getString("message"), code);
             case "AB1008":
             case "AB1009":
             case "AB1013":
@@ -77,21 +72,20 @@ public class SmartAPIResponseHandler {
             case "AB1015":
             case "AB1016":
             case "AB1017":
-                return new OrderException(jsonObject.getString("message"), code);
-
+            case "AB9028":
+                throw new OrderException(jsonObject.getString("message"), code);
             case "NetworkException":
-                return new NetworkException(jsonObject.getString("message"), code);
-
+                throw new NetworkException(jsonObject.getString("message"), code);
             case "AB1000":
             case "AB1001":
             case "AB1011":
-                return new PermissionException(jsonObject.getString("message"), code);
+                throw new PermissionException(jsonObject.getString("message"), code);
             case "AG8004":
-                return new ApiKeyException(APIKEY_EXCEPTION_MESSAGE, code);
+                throw new ApiKeyException(APIKEY_EXCEPTION_MESSAGE, code);
             case "AB1050":
-                return new OTPException(jsonObject.getString("message"), code);
+                throw new OTPException(jsonObject.getString("message"), code);
             default:
-                return new SmartAPIException(jsonObject.getString("data not found"));
+                throw new SmartAPIException(jsonObject.getString("data not found"));
         }
     }
 
@@ -131,7 +125,7 @@ public class SmartAPIResponseHandler {
                 return String.valueOf(handle(response, body));
             }
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             log.error("Error parsing response body as JSON.", e.getMessage());
             throw new SmartAPIException("Error parsing response body as JSON.");
         }

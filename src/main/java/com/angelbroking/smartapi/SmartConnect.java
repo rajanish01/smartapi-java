@@ -158,31 +158,27 @@ public class SmartConnect {
      * @throws SmartAPIException
      * @throws IOException
      */
-    public User generateSession(String clientCode, String password, String totp) {
+    public User generateSession(String clientCode, String password, String totp) throws Exception {
         User user = null;
-        try {
-            smartAPIRequestHandler = new SmartAPIRequestHandler(proxy);
+        smartAPIRequestHandler = new SmartAPIRequestHandler(proxy);
 
-            // Create JSON params object needed to be sent to api.
-            JSONObject params = new JSONObject();
-            params.put("clientcode", clientCode);
-            params.put("password", password);
-            params.put("totp", totp);
+        // Create JSON params object needed to be sent to api.
+        JSONObject params = new JSONObject();
+        params.put("clientcode", clientCode);
+        params.put("password", password);
+        params.put("totp", totp);
 
-            JSONObject loginResultObject = smartAPIRequestHandler.postRequest(this.apiKey, routes.getLoginUrl(),
-                    params);
-            log.info("login result: {}", loginResultObject);
-            String jwtToken = loginResultObject.getJSONObject("data").getString("jwtToken");
-            String refreshToken = loginResultObject.getJSONObject("data").getString("refreshToken");
-            String feedToken = loginResultObject.getJSONObject("data").getString("feedToken");
-            String url = routes.get("api.user.profile");
-            user = new User().parseResponse(smartAPIRequestHandler.getRequest(this.apiKey, url, jwtToken));
-            user.setAccessToken(jwtToken);
-            user.setRefreshToken(refreshToken);
-            user.setFeedToken(feedToken);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+        JSONObject loginResultObject = smartAPIRequestHandler.postRequest(this.apiKey, routes.getLoginUrl(),
+                params);
+        log.info("login result: {}", loginResultObject);
+        String jwtToken = loginResultObject.getJSONObject("data").getString("jwtToken");
+        String refreshToken = loginResultObject.getJSONObject("data").getString("refreshToken");
+        String feedToken = loginResultObject.getJSONObject("data").getString("feedToken");
+        String url = routes.get("api.user.profile");
+        user = new User().parseResponse(smartAPIRequestHandler.getRequest(this.apiKey, url, jwtToken));
+        user.setAccessToken(jwtToken);
+        user.setRefreshToken(refreshToken);
+        user.setFeedToken(feedToken);
         return user;
     }
 
@@ -237,14 +233,10 @@ public class SmartConnect {
      *
      * @return Profile is a POJO which contains profile related data.
      */
-    public User getProfile() {
+    public User getProfile() throws Exception {
         User user = null;
-        try {
-            String url = routes.get("api.user.profile");
-            user = new User().parseResponse(smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken));
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+        String url = routes.get("api.user.profile");
+        user = new User().parseResponse(smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken));
         return user;
     }
 
@@ -443,15 +435,10 @@ public class SmartConnect {
      *                           response.
      * @throws IOException       is thrown when there is connection error.
      */
-    public JSONObject getRMS() {
-        try {
-            String url = routes.get("api.order.rms.data");
-            JSONObject response = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
-            return response.getJSONObject("data");
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return null;
-        }
+    public JSONObject getRMS() throws Exception {
+        String url = routes.get("api.order.rms.data");
+        JSONObject response = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
+        return response.getJSONObject("data");
     }
 
     /**
@@ -476,7 +463,7 @@ public class SmartConnect {
      *
      * @return Object of Holding.
      */
-    public JSONObject getAllHolding() throws SmartAPIException, IOException {
+    public JSONObject getAllHolding() throws Exception {
         try {
             String url = routes.get("api.order.rms.AllHolding");
             return smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
@@ -535,38 +522,34 @@ public class SmartConnect {
      * @return Gtt contains only orderId.
      */
 
-    public Gtt gttCreateRule(Gtt gttParams) {
+    public Gtt gttCreateRule(Gtt gttParams) throws Exception {
         Gtt gtt = null;
-        try {
-            String url = routes.get("api.gtt.create");
-            JSONObject params = new JSONObject();
-            if (gttParams.getTradingSymbol() != null)
-                params.put("tradingsymbol", gttParams.getTradingSymbol());
-            if (gttParams.getSymbolToken() != null)
-                params.put("symboltoken", gttParams.getSymbolToken());
-            if (gttParams.getExchange() != null)
-                params.put("exchange", gttParams.getExchange());
-            if (gttParams.getTransactionType() != null)
-                params.put("transactiontype", gttParams.getTransactionType());
-            if (gttParams.getProductType() != null)
-                params.put("producttype", gttParams.getProductType());
-            if (gttParams.getPrice() != null)
-                params.put("price", gttParams.getPrice());
-            if (gttParams.getQuantity() != null)
-                params.put("qty", gttParams.getQuantity());
-            if (gttParams.getTriggerPrice() != null)
-                params.put("triggerprice", gttParams.getTriggerPrice());
-            if (gttParams.getDisclosedQty() != null)
-                params.put("disclosedqty", gttParams.getDisclosedQty());
-            if (gttParams.getTimePeriod() != null)
-                params.put("timeperiod", gttParams.getTimePeriod());
+        String url = routes.get("api.gtt.create");
+        JSONObject params = new JSONObject();
+        if (gttParams.getTradingSymbol() != null)
+            params.put("tradingsymbol", gttParams.getTradingSymbol());
+        if (gttParams.getSymbolToken() != null)
+            params.put("symboltoken", gttParams.getSymbolToken());
+        if (gttParams.getExchange() != null)
+            params.put("exchange", gttParams.getExchange());
+        if (gttParams.getTransactionType() != null)
+            params.put("transactiontype", gttParams.getTransactionType());
+        if (gttParams.getProductType() != null)
+            params.put("producttype", gttParams.getProductType());
+        if (gttParams.getPrice() != null)
+            params.put("price", gttParams.getPrice());
+        if (gttParams.getQuantity() != null)
+            params.put("qty", gttParams.getQuantity());
+        if (gttParams.getTriggerPrice() != null)
+            params.put("triggerprice", gttParams.getTriggerPrice());
+        if (gttParams.getDisclosedQty() != null)
+            params.put("disclosedqty", gttParams.getDisclosedQty());
+        if (gttParams.getTimePeriod() != null)
+            params.put("timeperiod", gttParams.getTimePeriod());
 
-            JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-            if (Objects.nonNull(response) && Objects.nonNull(response.getJSONObject("data"))) {
-                gtt = Utils.convertJsonObject(response.getJSONObject("data"), Gtt.class);
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
+        if (Objects.nonNull(response) && Objects.nonNull(response.getJSONObject("data"))) {
+            gtt = Utils.convertJsonObject(response.getJSONObject("data"), Gtt.class);
         }
         return gtt;
     }
@@ -578,33 +561,29 @@ public class SmartConnect {
      * @return Gtt contains only orderId.
      */
 
-    public Gtt gttModifyRule(Integer id, Gtt gttParams) {
+    public Gtt gttModifyRule(Integer id, Gtt gttParams) throws Exception {
         Gtt gtt = null;
-        try {
-            String url = routes.get("api.gtt.modify");
-            JSONObject params = new JSONObject();
-            if (gttParams.getSymbolToken() != null)
-                params.put("symboltoken", gttParams.getSymbolToken());
-            if (gttParams.getExchange() != null)
-                params.put("exchange", gttParams.getExchange());
-            if (gttParams.getPrice() != null)
-                params.put("price", gttParams.getPrice());
-            if (gttParams.getQuantity() != null)
-                params.put("qty", gttParams.getQuantity());
-            if (gttParams.getTriggerPrice() != null)
-                params.put("triggerprice", gttParams.getTriggerPrice());
-            if (gttParams.getDisclosedQty() != null)
-                params.put("disclosedqty", gttParams.getDisclosedQty());
-            if (gttParams.getTimePeriod() != null)
-                params.put("timeperiod", gttParams.getTimePeriod());
-            params.put("id", id);
+        String url = routes.get("api.gtt.modify");
+        JSONObject params = new JSONObject();
+        if (gttParams.getSymbolToken() != null)
+            params.put("symboltoken", gttParams.getSymbolToken());
+        if (gttParams.getExchange() != null)
+            params.put("exchange", gttParams.getExchange());
+        if (gttParams.getPrice() != null)
+            params.put("price", gttParams.getPrice());
+        if (gttParams.getQuantity() != null)
+            params.put("qty", gttParams.getQuantity());
+        if (gttParams.getTriggerPrice() != null)
+            params.put("triggerprice", gttParams.getTriggerPrice());
+        if (gttParams.getDisclosedQty() != null)
+            params.put("disclosedqty", gttParams.getDisclosedQty());
+        if (gttParams.getTimePeriod() != null)
+            params.put("timeperiod", gttParams.getTimePeriod());
+        params.put("id", id);
 
-            JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-            if (Objects.nonNull(response) && Objects.nonNull(response.getJSONObject("data"))) {
-                gtt = Utils.convertJsonObject(response.getJSONObject("data"), Gtt.class);
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
+        if (Objects.nonNull(response) && Objects.nonNull(response.getJSONObject("data"))) {
+            gtt = Utils.convertJsonObject(response.getJSONObject("data"), Gtt.class);
         }
         return gtt;
     }
@@ -616,21 +595,17 @@ public class SmartConnect {
      * @return Gtt contains only orderId.
      */
 
-    public Gtt gttCancelRule(Integer id, String symboltoken, String exchange) {
+    public Gtt gttCancelRule(Integer id, String symboltoken, String exchange) throws Exception {
         Gtt gtt = null;
-        try {
-            JSONObject params = new JSONObject();
-            params.put("id", id);
-            params.put("symboltoken", symboltoken);
-            params.put("exchange", exchange);
+        JSONObject params = new JSONObject();
+        params.put("id", id);
+        params.put("symboltoken", symboltoken);
+        params.put("exchange", exchange);
 
-            String url = routes.get("api.gtt.cancel");
-            JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-            if (Objects.nonNull(response) && Objects.nonNull(response.getJSONObject("data"))) {
-                gtt = Utils.convertJsonObject(response.getJSONObject("data"), Gtt.class);
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        String url = routes.get("api.gtt.cancel");
+        JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
+        if (Objects.nonNull(response) && Objects.nonNull(response.getJSONObject("data"))) {
+            gtt = Utils.convertJsonObject(response.getJSONObject("data"), Gtt.class);
         }
         return gtt;
     }
@@ -642,19 +617,15 @@ public class SmartConnect {
      * @return returns the details of gtt rule.
      */
 
-    public Gtt gttRuleDetails(Integer id) {
+    public Gtt gttRuleDetails(Integer id) throws Exception {
         Gtt gtt = null;
-        try {
-            JSONObject params = new JSONObject();
-            params.put("id", id);
+        JSONObject params = new JSONObject();
+        params.put("id", id);
 
-            String url = routes.get("api.gtt.details");
-            JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-            if (Objects.nonNull(response) && Objects.nonNull(response.getJSONObject("data"))) {
-                gtt = Utils.convertJsonObject(response.getJSONObject("data"), Gtt.class);
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        String url = routes.get("api.gtt.details");
+        JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
+        if (Objects.nonNull(response) && Objects.nonNull(response.getJSONObject("data"))) {
+            gtt = Utils.convertJsonObject(response.getJSONObject("data"), Gtt.class);
         }
         return gtt;
     }
@@ -733,7 +704,7 @@ public class SmartConnect {
      * @param params is market data params.
      * @return returns the details of market data.
      */
-    public JSONObject marketData(JSONObject params) throws SmartAPIException, IOException {
+    public JSONObject marketData(JSONObject params) throws Exception {
         try {
             String url = routes.get("api.market.data");
             JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
@@ -757,17 +728,13 @@ public class SmartConnect {
      * @return JSONObject which contains status
      */
 
-    public JSONObject logout() {
+    public JSONObject logout() throws Exception {
         JSONObject response = null;
-        try {
-            String url = routes.get("api.user.logout");
-            JSONObject params = new JSONObject();
-            params.put("clientcode", this.userId);
-            response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-            response.getJSONObject("data");
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+        String url = routes.get("api.user.logout");
+        JSONObject params = new JSONObject();
+        params.put("clientcode", this.userId);
+        response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
+        response.getJSONObject("data");
         return response;
     }
 
@@ -777,7 +744,7 @@ public class SmartConnect {
      * @param marginParams is margin data params.
      * @return returns the response of margin data.
      */
-    public JSONObject getMarginDetails(List<MarginParams> marginParams) throws IOException, SmartAPIException {
+    public JSONObject getMarginDetails(List<MarginParams> marginParams) throws Exception {
         try {
             JSONArray positionsArray = new JSONArray();
 
@@ -816,7 +783,7 @@ public class SmartConnect {
      *
      * @return JSONObject which contains order details from Smart API
      */
-    public JSONObject getIndividualOrderDetails(String orderId) throws IOException, SmartAPIException {
+    public JSONObject getIndividualOrderDetails(String orderId) throws Exception {
         try {
             String url = routes.get("api.individual.order").concat(orderId);
             return smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
