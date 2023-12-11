@@ -281,8 +281,9 @@ public class SmartConnect {
 
         params.put("variety", variety);
         JSONObject jsonObject = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-        order = new Order();
-        order.setOrderId(jsonObject.getJSONObject("data").getString("orderid"));
+        if(Objects.nonNull(jsonObject)) {
+            order = Utils.convertJsonObject(jsonObject.getJSONObject("data"), Order.class);
+        }
         log.info("order : {}", order);
         return order;
     }
@@ -320,8 +321,9 @@ public class SmartConnect {
         params.put("variety", variety);
         params.put("orderid", orderId);
         JSONObject jsonObject = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-        order = new Order();
-        order.setOrderId(jsonObject.getJSONObject("data").getString("orderid"));
+        if(Objects.nonNull(jsonObject)) {
+            order = Utils.convertJsonObject(jsonObject.getJSONObject("data"), Order.class);
+        }
         return order;
     }
 
@@ -341,8 +343,9 @@ public class SmartConnect {
         params.put("orderid", orderId);
 
         JSONObject jsonObject = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-        order = new Order();
-        order.setOrderId(jsonObject.getJSONObject("data").getString("orderid"));
+        if(Objects.nonNull(jsonObject)) {
+            order = Utils.convertJsonObject(jsonObject.getJSONObject("data"), Order.class);
+        }
         return order;
     }
 
@@ -396,7 +399,9 @@ public class SmartConnect {
         try {
             String url = routes.get("api.order.trade.book");
             JSONObject apiResponse = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
-            response = Utils.convertJsonArrayToList(apiResponse.getJSONArray("data"), Order.class);
+            if(Objects.nonNull(apiResponse)) {
+                response = Utils.convertJsonArrayToList(apiResponse.getJSONArray("data"), Order.class);
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -763,7 +768,8 @@ public class SmartConnect {
     public JSONObject getIndividualOrderDetails(String orderId) throws Exception {
         try {
             String url = routes.get("api.individual.order").concat(orderId);
-            return smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
+            JSONObject response = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
+            return response.getJSONObject("data");
         } catch (SmartAPIException ex) {
             log.error("{} while getting individual order {}", SMART_API_EXCEPTION_OCCURRED, ex.toString());
             throw new SmartAPIException(String.format("%s in getting individual order %s", SMART_API_EXCEPTION_ERROR_MSG, ex));

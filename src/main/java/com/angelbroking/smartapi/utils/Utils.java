@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Utils {
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -61,10 +62,12 @@ public class Utils {
     }
 
     public static <T> T convertJsonObject(JSONObject jsonObject, Class<T> targetClass) throws Exception {
+        if(Objects.isNull(jsonObject)) return (T) jsonObject;
         return mapper.readValue(jsonObject.toString(), targetClass);
     }
 
     public static <T> List<T> convertJsonArrayToList(JSONArray jsonArray, Class<T> targetClass) throws Exception {
+        if(Objects.isNull(jsonArray)) return (List<T>) jsonArray;
         return mapper.readValue(jsonArray.toString(), mapper.getTypeFactory().constructCollectionType(List.class, targetClass));
     }
 

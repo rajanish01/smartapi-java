@@ -117,4 +117,7 @@ public class Order {
 
     @JsonProperty("uniqueorderid")
     private String uniqueOrderId;
+
+    @JsonProperty("script")
+    private String script;
 }
