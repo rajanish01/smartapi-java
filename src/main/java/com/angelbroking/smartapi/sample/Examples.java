@@ -81,20 +81,20 @@ public class Examples {
     /**
      * Place order.
      */
-    public void placeOrder(SmartConnect smartConnect) throws SmartAPIException, IOException {
+    public void placeOrder(SmartConnect smartConnect) throws Exception {
 
         OrderParams orderParams = new OrderParams();
-        orderParams.variety = Constants.VARIETY_STOPLOSS;
-        orderParams.quantity = 1;
-        orderParams.symboltoken = "1660";
-        orderParams.exchange = Constants.EXCHANGE_NSE;
-        orderParams.ordertype = Constants.ORDER_TYPE_STOPLOSS_LIMIT;
-        orderParams.tradingsymbol = "ITC-EQ";
-        orderParams.producttype = Constants.PRODUCT_INTRADAY;
-        orderParams.duration = Constants.DURATION_DAY;
-        orderParams.transactiontype = Constants.TRANSACTION_TYPE_BUY;
-        orderParams.price = 122.2;
-        orderParams.triggerprice = "209";
+        orderParams.setVariety(Constants.VARIETY_STOPLOSS);
+        orderParams.setQuantity(1);
+        orderParams.setSymboltoken("1660");
+        orderParams.setExchange(Constants.EXCHANGE_NSE);
+        orderParams.setOrdertype(Constants.ORDER_TYPE_STOPLOSS_LIMIT);
+        orderParams.setTradingsymbol("ITC-EQ");
+        orderParams.setProducttype(Constants.PRODUCT_INTRADAY);
+        orderParams.setDuration(Constants.DURATION_DAY);
+        orderParams.setTransactiontype(Constants.TRANSACTION_TYPE_BUY);
+        orderParams.setPrice(122.2);
+        orderParams.setTriggerprice("209");
 
         Order order = smartConnect.placeOrder(orderParams, "STOPLOSS");
         log.info("order : {}", order);
@@ -103,18 +103,17 @@ public class Examples {
     /**
      * Modify order.
      */
-    public void modifyOrder(SmartConnect smartConnect) throws SmartAPIException, IOException {
+    public void modifyOrder(SmartConnect smartConnect) throws Exception {
         // Order modify request will return order model which will contain only
-
         OrderParams orderParams = new OrderParams();
-        orderParams.quantity = 1;
-        orderParams.ordertype = Constants.ORDER_TYPE_LIMIT;
-        orderParams.tradingsymbol = "ASHOKLEY";
-        orderParams.symboltoken = "3045";
-        orderParams.producttype = Constants.PRODUCT_DELIVERY;
-        orderParams.exchange = Constants.EXCHANGE_NSE;
-        orderParams.duration = Constants.DURATION_DAY;
-        orderParams.price = 122.2;
+        orderParams.setQuantity(1);
+        orderParams.setOrdertype(Constants.ORDER_TYPE_LIMIT);
+        orderParams.setTradingsymbol("ASHOKLEY");
+        orderParams.setSymboltoken("3045");
+        orderParams.setProducttype(Constants.PRODUCT_DELIVERY);
+        orderParams.setExchange(Constants.EXCHANGE_NSE);
+        orderParams.setDuration(Constants.DURATION_DAY);
+        orderParams.setPrice(122.2);
 
         String orderId = "201216000755110";
         Order order = smartConnect.modifyOrder(orderId, orderParams, Constants.VARIETY_NORMAL);
@@ -123,7 +122,7 @@ public class Examples {
     /**
      * Cancel an order
      */
-    public void cancelOrder(SmartConnect smartConnect) throws SmartAPIException, IOException {
+    public void cancelOrder(SmartConnect smartConnect) throws Exception {
         // Order modify request will return order model which will contain only
         // order_id.
         // Cancel order will return order model which will only have orderId.
@@ -153,9 +152,9 @@ public class Examples {
     /**
      * Get tradebook
      */
-    public void getTrades(SmartConnect smartConnect) throws SmartAPIException, IOException {
+    public void getTradeBook(SmartConnect smartConnect) throws SmartAPIException, IOException {
         // Returns tradebook.
-        JSONObject trades = smartConnect.getTrades();
+        List<Order> trades = smartConnect.getTradeBook();
 
     }
 

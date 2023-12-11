@@ -1,77 +1,78 @@
 package com.angelbroking.smartapi.models;
 
-/** A wrapper for order params to be sent while placing an order. */
+import lombok.Data;
+
+/**
+ * A wrapper for order params to be sent while placing an order.
+ */
+@Data
 public class OrderParams {
 
-	public String orderid;
-	/**
-	 * Exchange in which instrument is listed (NSE, BSE, NFO, BFO, CDS, MCX).
-	 */
+    private String orderid;
+    /**
+     * Exchange in which instrument is listed (NSE, BSE, NFO, BFO, CDS, MCX).
+     */
 
-	public String exchange;
+    private String exchange;
 
-	/**
-	 * symboltoken of the instrument.
-	 */
+    /**
+     * symboltoken of the instrument.
+     */
 
-	public String symbolToken;
+    private String symboltoken;
 
-	/**
-	 * Transaction type (BUY or SELL).
-	 */
+    /**
+     * Transaction type (BUY or SELL).
+     */
 
-	public String transactiontype;
+    private String transactiontype;
 
-	/**
-	 * Order quantity
-	 */
+    /**
+     * Order quantity
+     */
 
-	public Integer quantity;
+    private Integer quantity;
 
-	/**
-	 * Order Price
-	 */
+    /**
+     * Order Price
+     */
 
-	public Double price;
+    private Double price;
 
-	/**
-	 * producttype code (NRML, MIS, CNC).
-	 */
+    /**
+     * producttype code (NRML, MIS, CNC).
+     */
 
-	public String producttype;
+    private String producttype;
 
-	/**
-	 * Order type (LIMIT, SL, SL-M, MARKET).
-	 */
+    /**
+     * Order type (LIMIT, SL, SL-M, MARKET).
+     */
 
-	public String ordertype;
+    private String ordertype;
 
-	/**
-	 * Order duration (DAY, IOC).
-	 */
+    /**
+     * Order duration (DAY, IOC).
+     */
 
-	public String duration;
+    private String duration;
 
-	/**
-	 * variety
-	 */
+    /**
+     * variety
+     */
 
-	public String variety;
+    private String variety;
 
-	/**
-	 * Order duration (DAY, IOC).
-	 */
+    /**
+     * Order duration (DAY, IOC).
+     */
 
-	public String tradingsymbol;
-	
-	public String triggerprice;
-	
-	public String squareoff;
-	
-	public String stoploss;
-	
-	public String symboltoken;
-	
-	
+    private String tradingsymbol;
+
+    private String triggerprice;
+
+    private String squareoff;
+
+    private String stoploss;
 
 }

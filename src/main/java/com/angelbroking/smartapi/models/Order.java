@@ -1,128 +1,114 @@
 package com.angelbroking.smartapi.models;
 
-import com.google.gson.annotations.SerializedName;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 /**
  * A wrapper for order.
  */
+@Data
 public class Order {
 
-	@SerializedName("disclosedquantity")
-	public String disclosedQuantity;
+    @JsonProperty("disclosedquantity")
+    private String disclosedQuantity;
 
-	@SerializedName("duration")
-	public String duration;
+    @JsonProperty("duration")
+    private String duration;
 
-	@SerializedName("tradingsymbol")
-	public String tradingSymbol;
+    @JsonProperty("tradingsymbol")
+    private String tradingSymbol;
 
-	@SerializedName("variety")
-	public String variety;
+    @JsonProperty("variety")
+    private String variety;
 
-	@SerializedName("ordertype")
-	public String orderType;
+    @JsonProperty("ordertype")
+    private String orderType;
 
-	@SerializedName("triggerprice")
-	public String triggerPrice;
+    @JsonProperty("triggerprice")
+    private String triggerPrice;
 
-	@SerializedName("text")
-	public String text;
+    @JsonProperty("text")
+    private String text;
 
-	@SerializedName("price")
-	public String price;
+    @JsonProperty("price")
+    private String price;
 
-	@SerializedName("status")
-	public String status;
+    @JsonProperty("status")
+    private String status;
 
-	@SerializedName("producttype")
-	public String productType;
+    @JsonProperty("producttype")
+    private String productType;
 
-	@SerializedName("exchange")
-	public String exchange;
+    @JsonProperty("exchange")
+    private String exchange;
 
-	@SerializedName("orderid")
-	public String orderId;
+    @JsonProperty("orderid")
+    private String orderId;
 
-	@SerializedName("symbol")
-	public String symbol;
+    @JsonProperty("symbol")
+    private String symbol;
 
-	@SerializedName("updatetime")
-	public String updateTime;
+    @JsonProperty("updatetime")
+    private String updateTime;
 
-	@SerializedName("exchtime")
-	public String exchangeTimestamp;
+    @JsonProperty("exchtime")
+    private String exchangeTimestamp;
 
-	@SerializedName("exchorderupdatetime")
-	public String exchangeUpdateTimestamp;
+    @JsonProperty("exchorderupdatetime")
+    private String exchangeUpdateTimestamp;
 
-	@SerializedName("averageprice")
-	public String averagePrice;
+    @JsonProperty("averageprice")
+    private String averagePrice;
 
-	@SerializedName("transactiontype")
-	public String transactionType;
+    @JsonProperty("transactiontype")
+    private String transactionType;
 
-	@SerializedName("quantity")
-	public String quantity;
+    @JsonProperty("quantity")
+    private String quantity;
 
-	@SerializedName("squareoff")
-	public String squareOff;
+    @JsonProperty("squareoff")
+    private String squareOff;
 
-	@SerializedName("stoploss")
-	public String stopLoss;
+    @JsonProperty("stoploss")
+    private String stopLoss;
 
-	@SerializedName("trailingstoploss")
-	public String trailingStopLoss;
+    @JsonProperty("trailingstoploss")
+    private String trailingStopLoss;
 
-	@SerializedName("symboltoken")
-	public String symbolToken;
+    @JsonProperty("symboltoken")
+    private String symbolToken;
 
-	@SerializedName("instrumenttype")
-	public String instrumentType;
+    @JsonProperty("instrumenttype")
+    private String instrumentType;
 
-	@SerializedName("strikeprice")
-	public String strikePrice;
+    @JsonProperty("strikeprice")
+    private String strikePrice;
 
-	@SerializedName("optiontype")
-	public String optionType;
+    @JsonProperty("optiontype")
+    private String optionType;
 
-	@SerializedName("expirydate")
-	public String expiryDate;
+    @JsonProperty("expirydate")
+    private String expiryDate;
 
-	@SerializedName("lotsize")
-	public String lotSize;
+    @JsonProperty("lotsize")
+    private String lotSize;
 
-	@SerializedName("cancelsize")
-	public String cancelSize;
+    @JsonProperty("cancelsize")
+    private String cancelSize;
 
-	@SerializedName("filledshares")
-	public String filledShares;
+    @JsonProperty("filledshares")
+    private String filledShares;
 
-	@SerializedName("orderstatus")
-	public String orderStatus;
+    @JsonProperty("orderstatus")
+    private String orderStatus;
 
-	@SerializedName("unfilledshares")
-	public String unfilledShares;
+    @JsonProperty("unfilledshares")
+    private String unfilledShares;
 
-	@SerializedName("fillid")
-	public String fillId;
+    @JsonProperty("fillid")
+    private String fillId;
 
-	@SerializedName("filltime")
-	public String fillTime;
-
-	@Override
-	public String toString() {
-		return "Order [disclosedQuantity=" + disclosedQuantity + ", duration=" + duration + ", tradingSymbol="
-				+ tradingSymbol + ", variety=" + variety + ", orderType=" + orderType + ", triggerPrice=" + triggerPrice
-				+ ", text=" + text + ", price=" + price + ", status=" + status + ", productType=" + productType
-				+ ", exchange=" + exchange + ", orderId=" + orderId + ", symbol=" + symbol + ", updateTime="
-				+ updateTime + ", exchangeTimestamp=" + exchangeTimestamp + ", exchangeUpdateTimestamp="
-				+ exchangeUpdateTimestamp + ", averagePrice=" + averagePrice + ", transactionType=" + transactionType
-				+ ", quantity=" + quantity + ", squareOff=" + squareOff + ", stopLoss=" + stopLoss
-				+ ", trailingStopLoss=" + trailingStopLoss + ", symbolToken=" + symbolToken + ", instrumentType="
-				+ instrumentType + ", strikePrice=" + strikePrice + ", optionType=" + optionType + ", expiryDate="
-				+ expiryDate + ", lotSize=" + lotSize + ", cancelSize=" + cancelSize + ", filledShares=" + filledShares
-				+ ", orderStatus=" + orderStatus + ", unfilledShares=" + unfilledShares + ", fillId=" + fillId
-				+ ", fillTime=" + fillTime + "]";
-	}
-
+    @JsonProperty("filltime")
+    private String fillTime;
 }

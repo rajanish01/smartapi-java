@@ -57,7 +57,7 @@ public class APITest {
 			examples.getLTP(smartConnect);
 
 			/* log.info("getTrades"); */
-			examples.getTrades(smartConnect);
+			examples.getTradeBook(smartConnect);
 
 			/* log.info("getRMS"); */
 			examples.getRMS(smartConnect);
