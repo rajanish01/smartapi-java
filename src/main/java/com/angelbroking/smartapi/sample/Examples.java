@@ -142,7 +142,7 @@ public class Examples {
      * exchange with tradingsymbol or instrument token only. For example {NSE:NIFTY
      * 50, BSE:SENSEX} or {256265, 265}
      */
-    public void getLTP(SmartConnect smartConnect) throws SmartAPIException, IOException {
+    public void getLTP(SmartConnect smartConnect) throws Exception {
         String exchange = "NSE";
         String tradingSymbol = "SBIN-EQ";
         String symboltoken = "3045";

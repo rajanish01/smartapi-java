@@ -42,53 +42,6 @@ public class SmartAPIResponseHandler {
         }
     }
 
-    private void dealWithException(JSONObject jsonObject, String code) throws Exception {
-        switch (code) {
-            // if there is a token exception, generate a signal to logout the user.
-            case "AG8003":
-            case "AB8050":
-            case "AB8051":
-            case "AB1010":
-                if (SmartConnect.sessionExpiryHook != null) {
-                    SmartConnect.sessionExpiryHook.sessionExpired();
-                }
-                throw new TokenException(jsonObject.getString("message"), code);
-            case "AG8001":
-                throw new TokenException(TOKEN_EXCEPTION_MESSAGE, code);
-            case "AG8002":
-                throw new DataException(jsonObject.getString("message"), code);
-            case "AB1004":
-            case "AB2000":
-                throw new GeneralException(jsonObject.getString("message"), code);
-            case "AB1003":
-            case "AB1005":
-            case "AB1012":
-            case "AB1002":
-                throw new InputException(jsonObject.getString("message"), code);
-            case "AB1008":
-            case "AB1009":
-            case "AB1013":
-            case "AB1014":
-            case "AB1015":
-            case "AB1016":
-            case "AB1017":
-            case "AB9028":
-                throw new OrderException(jsonObject.getString("message"), code);
-            case "NetworkException":
-                throw new NetworkException(jsonObject.getString("message"), code);
-            case "AB1000":
-            case "AB1001":
-            case "AB1011":
-                throw new PermissionException(jsonObject.getString("message"), code);
-            case "AG8004":
-                throw new ApiKeyException(APIKEY_EXCEPTION_MESSAGE, code);
-            case "AB1050":
-                throw new OTPException(jsonObject.getString("message"), code);
-            default:
-                throw new SmartAPIException(jsonObject.getString("data not found"));
-        }
-    }
-
     public String handler(Response response, String body) throws SmartAPIException, JSONException, IOException {
         if (response.code() == 200) {
             return handleResponse(response, body);
@@ -139,6 +92,74 @@ public class SmartAPIResponseHandler {
         } catch (IOException e) {
             log.error("Error parsing JSON data array.", e);
             throw new SmartAPIException("Error parsing JSON data array.");
+        }
+    }
+
+    private void dealWithException(JSONObject jsonObject, String code) throws Exception {
+        switch (code) {
+            // if there is a token exception, generate a signal to logout the user.
+            case "AG8003":
+            case "AB8050":
+            case "AB8051":
+            case "AB1010":
+                if (SmartConnect.sessionExpiryHook != null) {
+                    SmartConnect.sessionExpiryHook.sessionExpired();
+                }
+                throw new TokenException(jsonObject.getString("message"), code);
+            case "AG8001":
+                throw new TokenException(TOKEN_EXCEPTION_MESSAGE, code);
+            case "AG8002":
+                throw new DataException(jsonObject.getString("message"), code);
+            case "AB1004":
+            case "AB2000":
+                throw new GeneralException(jsonObject.getString("message"), code);
+            case "AB1003":
+            case "AB1005":
+            case "AB1012":
+            case "AB1002":
+                throw new InputException(jsonObject.getString("message"), code);
+            case "AB1008":
+            case "AB1009":
+            case "AB1013":
+            case "AB1014":
+            case "AB1015":
+            case "AB1016":
+            case "AB1017":
+            case "AB9028":
+            case "AB4048":
+                throw new OrderException(jsonObject.getString("message"), code);
+            case "NetworkException":
+                throw new NetworkException(jsonObject.getString("message"), code);
+            case "AB1000":
+            case "AB1001":
+            case "AB1011":
+                throw new PermissionException(jsonObject.getString("message"), code);
+            case "AG8004":
+                throw new ApiKeyException(APIKEY_EXCEPTION_MESSAGE, code);
+            case "AB1050":
+                throw new OTPException(jsonObject.getString("message"), code);
+            case "AB9000":
+            case "AB9001":
+            case "AB9002":
+            case "AB9003":
+            case "AB9004":
+            case "AB9005":
+            case "AB9006":
+            case "AB9007":
+            case "AB9008":
+            case "AB9009":
+            case "AB9010":
+            case "AB9011":
+            case "AB9012":
+            case "AB9013":
+            case "AB9014":
+            case "AB9015":
+            case "AB9016":
+            case "AB9017":
+            case "AB9018":
+                throw new GTTException(jsonObject.getString("message"), code);
+            default:
+                throw new SmartAPIException(jsonObject.getString("data not found"));
         }
     }
 }
