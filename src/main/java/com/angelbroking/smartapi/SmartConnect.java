@@ -281,7 +281,7 @@ public class SmartConnect {
 
         params.put("variety", variety);
         JSONObject jsonObject = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-        if(Objects.nonNull(jsonObject)) {
+        if (Objects.nonNull(jsonObject)) {
             order = Utils.convertJsonObject(jsonObject.getJSONObject("data"), Order.class);
         }
         log.info("order : {}", order);
@@ -321,7 +321,7 @@ public class SmartConnect {
         params.put("variety", variety);
         params.put("orderid", orderId);
         JSONObject jsonObject = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-        if(Objects.nonNull(jsonObject)) {
+        if (Objects.nonNull(jsonObject)) {
             order = Utils.convertJsonObject(jsonObject.getJSONObject("data"), Order.class);
         }
         return order;
@@ -343,7 +343,7 @@ public class SmartConnect {
         params.put("orderid", orderId);
 
         JSONObject jsonObject = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-        if(Objects.nonNull(jsonObject)) {
+        if (Objects.nonNull(jsonObject)) {
             order = Utils.convertJsonObject(jsonObject.getJSONObject("data"), Order.class);
         }
         return order;
@@ -399,7 +399,7 @@ public class SmartConnect {
         try {
             String url = routes.get("api.order.trade.book");
             JSONObject apiResponse = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
-            if(Objects.nonNull(apiResponse)) {
+            if (Objects.nonNull(apiResponse)) {
                 response = Utils.convertJsonArrayToList(apiResponse.getJSONArray("data"), Order.class);
             }
         } catch (Exception e) {
@@ -428,15 +428,11 @@ public class SmartConnect {
      *
      * @return Object of Holding.
      */
-    public JSONObject getHolding() {
+    public JSONObject getHolding() throws Exception {
         JSONObject response = null;
-        try {
-            String url = routes.get("api.order.rms.holding");
-            response = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-        return response;
+        String url = routes.get("api.order.rms.holding");
+        response = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
+        return response.getJSONObject("data");
     }
 
 
@@ -448,7 +444,8 @@ public class SmartConnect {
     public JSONObject getAllHolding() throws Exception {
         try {
             String url = routes.get("api.order.rms.AllHolding");
-            return smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
+            JSONObject response = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
+            return response.getJSONObject("data");
         } catch (SmartAPIException ex) {
             log.error("{} while getting all holdings {}", SMART_API_EXCEPTION_OCCURRED, ex.toString());
             throw new SmartAPIException(String.format("%s in getting all holdings %s", SMART_API_EXCEPTION_ERROR_MSG, ex));
@@ -466,15 +463,11 @@ public class SmartConnect {
      *
      * @return Object of position.
      */
-    public JSONObject getPosition() {
+    public JSONObject getPosition() throws Exception {
         JSONObject response = null;
-        try {
-            String url = routes.get("api.order.rms.position");
-            response = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-        return response;
+        String url = routes.get("api.order.rms.position");
+        response = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
+        return response.getJSONObject("data");
     }
 
     /**
@@ -486,14 +479,10 @@ public class SmartConnect {
      *                           response.
      * @throws IOException       is thrown when there is connection error.
      */
-    public JSONObject convertPosition(JSONObject params) {
+    public JSONObject convertPosition(JSONObject params) throws Exception {
         JSONObject response = null;
-        try {
-            String url = routes.get("api.order.rms.position.convert");
-            response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+        String url = routes.get("api.order.rms.position.convert");
+        response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
         return response;
     }
 

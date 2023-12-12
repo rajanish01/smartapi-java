@@ -169,7 +169,7 @@ public class Examples {
     /**
      * Get Holdings
      */
-    public void getHolding(SmartConnect smartConnect) throws SmartAPIException, IOException {
+    public void getHolding(SmartConnect smartConnect) throws Exception {
         // Returns Holding.
         JSONObject response = smartConnect.getHolding();
     }
@@ -186,7 +186,7 @@ public class Examples {
     /**
      * Get Position
      */
-    public void getPosition(SmartConnect smartConnect) throws SmartAPIException, IOException {
+    public void getPosition(SmartConnect smartConnect) throws Exception {
         // Returns Position.
         JSONObject response = smartConnect.getPosition();
     }
@@ -194,7 +194,7 @@ public class Examples {
     /**
      * convert Position
      */
-    public void convertPosition(SmartConnect smartConnect) throws SmartAPIException, IOException {
+    public void convertPosition(SmartConnect smartConnect) throws Exception {
 
         JSONObject requestObejct = new JSONObject();
         requestObejct.put("exchange", "NSE");
