@@ -689,7 +689,6 @@ public class SmartConnect {
         } catch (JSONException ex) {
             log.error("{} while placing order {}", JSON_EXCEPTION_OCCURRED, ex.getMessage());
             throw new JSONException(String.format("%s in placing order %s", JSON_EXCEPTION_ERROR_MSG, ex.getMessage()));
-
         }
     }
 
@@ -735,7 +734,7 @@ public class SmartConnect {
 
             String url = routes.get("api.margin.batch");
             JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, requestBody, accessToken);
-            return response;
+            return response.getJSONObject("data");
         } catch (SmartAPIException ex) {
             log.error("{} while fetching margin data {}", SMART_API_EXCEPTION_OCCURRED, ex.toString());
             throw new SmartAPIException(String.format("%s  while fetching margin data %s", SMART_API_EXCEPTION_ERROR_MSG, ex));
@@ -745,7 +744,6 @@ public class SmartConnect {
         } catch (JSONException ex) {
             log.error("{}  while fetching margin data {}", JSON_EXCEPTION_OCCURRED, ex.getMessage());
             throw new JSONException(String.format("%s  while fetching margin data %s", JSON_EXCEPTION_ERROR_MSG, ex.getMessage()));
-
         }
     }
 
