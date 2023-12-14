@@ -653,20 +653,29 @@ public class SmartConnect {
      * @return returns the details of Search Script data.
      */
 
-    public String getSearchScrip(JSONObject payload) throws SmartAPIException, IOException {
+    public JSONArray getSearchScrip(JSONObject payload) throws SmartAPIException, IOException {
+        JSONArray scrip = null;
         try {
             String url = routes.get("api.search.script.data");
-            return smartAPIRequestHandler.postRequestJSONObject(this.apiKey, url, payload, accessToken);
+            JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, payload, accessToken);
+            scrip = response.getJSONArray("data");
         } catch (IOException ex) {
             log.error("{} while generating session {}", IO_EXCEPTION_OCCURRED, ex.getMessage());
             throw new IOException(String.format("%s in generating Session  %s", IO_EXCEPTION_ERROR_MSG, ex.getMessage()));
         } catch (JSONException ex) {
             log.error("{} while generating session {}", JSON_EXCEPTION_OCCURRED, ex.getMessage());
             throw new JSONException(String.format("%s in generating Session %s", JSON_EXCEPTION_ERROR_MSG, ex.getMessage()));
-        } catch (SmartAPIException ex) {
+        } catch (Exception ex) {
             log.error("{} while generating session {}", SMART_API_EXCEPTION_OCCURRED, ex.toString());
             throw new SmartAPIException(String.format("%s in generating Session %s", SMART_API_EXCEPTION_ERROR_MSG, ex));
         }
+        return scrip;
+    }
+
+    public String getInstrumentList() throws Exception {
+        String instrumentList = null;
+        String url = routes.get("api.instrument.list");
+        return smartAPIRequestHandler.getRequestJSONObject(this.apiKey, url, accessToken);
     }
 
     /**

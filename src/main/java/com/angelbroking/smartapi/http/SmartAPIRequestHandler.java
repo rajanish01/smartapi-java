@@ -391,6 +391,14 @@ public class SmartAPIRequestHandler {
         return new SmartAPIResponseHandler().handler(response, body);
     }
 
+    public String getRequestJSONObject(String apiKey, String url, String accessToken)
+            throws Exception {
+        Request request = createGetRequest(apiKey, url, accessToken);
+        Response response = client.newCall(request).execute();
+        String body = response.body().string();
+        return new SmartAPIResponseHandler().handler(response, body);
+    }
+
     /**
      * Creates a PUT request.
      *
