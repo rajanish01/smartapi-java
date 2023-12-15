@@ -289,7 +289,7 @@ public class Examples {
     /**
      * Historic Data
      */
-    public void getCandleData(SmartConnect smartConnect) throws SmartAPIException, IOException {
+    public void getCandleData(SmartConnect smartConnect) throws Exception {
 
         JSONObject requestObejct = new JSONObject();
         requestObejct.put("exchange", "NSE");
@@ -298,7 +298,7 @@ public class Examples {
         requestObejct.put("fromdate", "2021-03-08 09:00");
         requestObejct.put("todate", "2021-03-09 09:20");
 
-        String response = smartConnect.candleData(requestObejct);
+        JSONArray response = smartConnect.candleData(requestObejct);
     }
 
 

@@ -1,5 +1,7 @@
 package com.angelbroking.smartapi.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A wrapper class for margin params to get the margin using smartAPI margin url
  */
@@ -14,6 +16,7 @@ public class MarginParams {
     /**
      * Quantity to transact
      */
+    @JsonProperty("qty")
     public Integer quantity;
 
 

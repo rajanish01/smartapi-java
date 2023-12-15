@@ -128,6 +128,7 @@ public class SmartAPIResponseHandler {
             case "AB1017":
             case "AB9028":
             case "AB4006":
+            case "AB4022":
                 throw new OrderException(jsonObject.getString("message"), code);
             case "NetworkException":
                 throw new NetworkException(jsonObject.getString("message"), code);

@@ -50,13 +50,17 @@ public class Routes {
 				put("api.market.data", "/rest/secure/angelbroking/market/v1/quote");
 				put("api.margin.batch", "/rest/secure/angelbroking/margin/v1/batch");
 				put("api.individual.order", "/rest/secure/angelbroking/order/v1/details/");
-				put("api.instrument.list","/OpenAPI_File/files/OpenAPIScripMaster.json");
+				put("api.instrument.list","https://margincalculator.angelbroking.com/OpenAPI_File/files/OpenAPIScripMaster.json");
 			}
 		};
 	}
 
 	public String get(String key) {
 		return _rootUrl + routes.get(key);
+	}
+
+	public String getRaw(String key) {
+		return routes.get(key);
 	}
 
 	public String getLoginUrl() {

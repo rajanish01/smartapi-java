@@ -34,7 +34,8 @@ public class SmartConnect {
     private String userId;
     private SmartAPIRequestHandler smartAPIRequestHandler;
 
-    public SmartConnect() {}
+    public SmartConnect() {
+    }
 
     public SmartConnect(String apiKey) {
         this.apiKey = apiKey;
@@ -629,16 +630,11 @@ public class SmartConnect {
      * @param params is historic data params.
      * @return returns the details of historic data.
      */
-    public String candleData(JSONObject params) {
-        try {
-            String url = routes.get("api.candle.data");
-            JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-            log.info("response : {}", response);
-            return response.getString("data");
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return null;
-        }
+    public JSONArray candleData(JSONObject params) throws Exception {
+        String url = routes.get("api.candle.data");
+        JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
+        log.info("response : {}", response);
+        return response.getJSONArray("data");
     }
 
     /**
@@ -669,7 +665,7 @@ public class SmartConnect {
 
     public String getInstrumentList() throws Exception {
         String instrumentList = null;
-        String url = routes.get("api.instrument.list");
+        String url = routes.getRaw("api.instrument.list");
         return smartAPIRequestHandler.getRequestJSONObject(this.apiKey, url, accessToken);
     }
 

@@ -395,8 +395,7 @@ public class SmartAPIRequestHandler {
             throws Exception {
         Request request = createGetRequest(apiKey, url, accessToken);
         Response response = client.newCall(request).execute();
-        String body = response.body().string();
-        return new SmartAPIResponseHandler().handler(response, body);
+        return response.body().string();
     }
 
     /**
