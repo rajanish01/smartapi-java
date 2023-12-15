@@ -381,7 +381,7 @@ public class SmartConnect {
         String url = routes.get("api.ltp.data");
         JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
 
-        return response.getJSONObject("data");
+        return response.isNull("data") ? null : response.getJSONObject("data");
     }
 
     /**
@@ -415,7 +415,7 @@ public class SmartConnect {
     public JSONObject getRMS() throws Exception {
         String url = routes.get("api.order.rms.data");
         JSONObject response = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
-        return response.getJSONObject("data");
+        return response.isNull("data") ? null : response.getJSONObject("data");
     }
 
     /**
@@ -423,11 +423,11 @@ public class SmartConnect {
      *
      * @return Object of Holding.
      */
-    public JSONObject getHolding() throws Exception {
+    public JSONArray getHolding() throws Exception {
         JSONObject response = null;
         String url = routes.get("api.order.rms.holding");
         response = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
-        return response.getJSONObject("data");
+        return response.getJSONArray("data");
     }
 
 
@@ -440,7 +440,7 @@ public class SmartConnect {
         try {
             String url = routes.get("api.order.rms.AllHolding");
             JSONObject response = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
-            return response.getJSONObject("data");
+            return response.isNull("data") ? null : response.getJSONObject("data");
         } catch (SmartAPIException ex) {
             log.error("{} while getting all holdings {}", SMART_API_EXCEPTION_OCCURRED, ex.toString());
             throw new SmartAPIException(String.format("%s in getting all holdings %s", SMART_API_EXCEPTION_ERROR_MSG, ex));
@@ -462,7 +462,7 @@ public class SmartConnect {
         JSONObject response = null;
         String url = routes.get("api.order.rms.position");
         response = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
-        return response.getJSONObject("data");
+        return response.isNull("data") ? null : response.getJSONObject("data");
     }
 
     /**
@@ -683,7 +683,7 @@ public class SmartConnect {
         try {
             String url = routes.get("api.market.data");
             JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-            return response.getJSONObject("data");
+            return response.isNull("data") ? null : response.getJSONObject("data");
         } catch (SmartAPIException ex) {
             log.error("{} while placing order {}", SMART_API_EXCEPTION_OCCURRED, ex.toString());
             throw new SmartAPIException(String.format("%s in placing order %s", SMART_API_EXCEPTION_ERROR_MSG, ex));
@@ -738,7 +738,7 @@ public class SmartConnect {
 
             String url = routes.get("api.margin.batch");
             JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, requestBody, accessToken);
-            return response.getJSONObject("data");
+            return response.isNull("data") ? null : response.getJSONObject("data");
         } catch (SmartAPIException ex) {
             log.error("{} while fetching margin data {}", SMART_API_EXCEPTION_OCCURRED, ex.toString());
             throw new SmartAPIException(String.format("%s  while fetching margin data %s", SMART_API_EXCEPTION_ERROR_MSG, ex));
@@ -760,7 +760,7 @@ public class SmartConnect {
         try {
             String url = routes.get("api.individual.order").concat(orderId);
             JSONObject response = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
-            return response.getJSONObject("data");
+            return response.isNull("data") ? null : response.getJSONObject("data");
         } catch (SmartAPIException ex) {
             log.error("{} while getting individual order {}", SMART_API_EXCEPTION_OCCURRED, ex.toString());
             throw new SmartAPIException(String.format("%s in getting individual order %s", SMART_API_EXCEPTION_ERROR_MSG, ex));

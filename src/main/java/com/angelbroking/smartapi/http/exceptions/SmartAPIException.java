@@ -22,6 +22,7 @@ public class SmartAPIException extends Exception {
     }
 
     public SmartAPIException(String message) {
+        super(message);
         this.message = message;
         log.error(message);
     }

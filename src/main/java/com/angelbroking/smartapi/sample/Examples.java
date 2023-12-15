@@ -171,7 +171,7 @@ public class Examples {
      */
     public void getHolding(SmartConnect smartConnect) throws Exception {
         // Returns Holding.
-        JSONObject response = smartConnect.getHolding();
+        JSONArray response = smartConnect.getHolding();
     }
 
     /**

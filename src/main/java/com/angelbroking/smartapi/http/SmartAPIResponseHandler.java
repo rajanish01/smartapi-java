@@ -118,6 +118,7 @@ public class SmartAPIResponseHandler {
             case "AB1012":
             case "AB1002":
                 throw new InputException(jsonObject.getString("message"), code);
+            case "AB1007":
             case "AB1008":
             case "AB1009":
             case "AB1013":
