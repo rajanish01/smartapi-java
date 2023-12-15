@@ -15,7 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 @Slf4j
-public class OrderUpdateWebsocket {
+public class SmartStreamOrderUpdate {
     private static final int pingIntervalInMilliSeconds = 10000; // 10 seconds
     private static final String headerAuthorization = "Authorization";
     private static final Integer delayInMilliSeconds = 5000;
@@ -24,7 +24,7 @@ public class OrderUpdateWebsocket {
     private final String wsuri = routes.getOrderUpdateUri();
     private WebSocket ws;
     private String accessToken;
-    private final OrderUpdateListner orderUpdateListner;
+    private final OrderUpdateListener orderUpdateListener;
 
     private Timer pingTimer;
     private LocalDateTime lastPongReceivedTime = LocalDateTime.now();
@@ -33,16 +33,15 @@ public class OrderUpdateWebsocket {
      * Initializes the OrderUpdateWebsocket.
      *
      * @param accessToken
-     * @param orderUpdateListner
+     * @param orderUpdateListener
      */
-    public OrderUpdateWebsocket(String accessToken, OrderUpdateListner orderUpdateListner) {
-        if (StringUtils.isEmpty(accessToken) || Utils.validateInputNullCheck(orderUpdateListner)) {
-
+    public SmartStreamOrderUpdate(String accessToken, OrderUpdateListener orderUpdateListener) {
+        if (StringUtils.isEmpty(accessToken) || Utils.validateInputNullCheck(orderUpdateListener)) {
             throw new IllegalArgumentException(
                     "clientId, feedToken and SmartStreamListener should not be empty or null");
         }
         this.accessToken = accessToken;
-        this.orderUpdateListner = orderUpdateListner;
+        this.orderUpdateListener = orderUpdateListener;
 
         init();
     }
@@ -59,8 +58,8 @@ public class OrderUpdateWebsocket {
             ws.addHeader(headerAuthorization, "Bearer " + accessToken);
             ws.addListener(getWebsocketAdapter());
         } catch (IOException e) {
-            if (Utils.validateInputNotNullCheck(orderUpdateListner)) {
-                orderUpdateListner.onError(getErrorHolder(e));
+            if (Utils.validateInputNotNullCheck(orderUpdateListener)) {
+                orderUpdateListener.onError(getErrorHolder(e));
             }
         }
     }
@@ -69,14 +68,14 @@ public class OrderUpdateWebsocket {
         return new WebSocketAdapter() {
             @Override
             public void onConnected(WebSocket websocket, Map<String, List<String>> headers) throws WebSocketException {
-                orderUpdateListner.onConnected();
+                orderUpdateListener.onConnected();
                 startPingTimer(websocket);
             }
 
             @Override
             public void onTextMessage(WebSocket websocket, String text) throws Exception {
                 try {
-                    orderUpdateListner.onOrderUpdate(text);
+                    orderUpdateListener.onOrderUpdate(text);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -99,12 +98,12 @@ public class OrderUpdateWebsocket {
                         reconnect();
                     } else {
                         stopPingTimer();
-                        orderUpdateListner.onDisconnected();
+                        orderUpdateListener.onDisconnected();
                     }
                 } catch (Exception e) {
                     SmartStreamError error = new SmartStreamError();
                     error.setException(e);
-                    orderUpdateListner.onError(error);
+                    orderUpdateListener.onError(error);
                 }
             }
 
@@ -117,11 +116,11 @@ public class OrderUpdateWebsocket {
             public void onPongFrame(WebSocket websocket, WebSocketFrame frame) throws Exception {
                 try {
                     lastPongReceivedTime = LocalDateTime.now();
-                    orderUpdateListner.onPong();
+                    orderUpdateListener.onPong();
                 } catch (Exception e) {
                     SmartStreamError error = new SmartStreamError();
                     error.setException(e);
-                    orderUpdateListner.onError(error);
+                    orderUpdateListener.onError(error);
                 }
             }
         };
@@ -140,7 +139,7 @@ public class OrderUpdateWebsocket {
                         reconnect();
                     }
                 } catch (Exception e) {
-                    orderUpdateListner.onError(getErrorHolder(e));
+                    orderUpdateListener.onError(getErrorHolder(e));
                 }
             }
         }, delayInMilliSeconds, periodInMilliSeconds); // run at every 5 second

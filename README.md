@@ -516,7 +516,7 @@ For more details, take a look at Examples.java in the sample directory.
      * @param accessToken
      */
     public void orderUpdateUsage(String accessToken){
-            OrderUpdateWebsocket orderUpdateWebsocket = new OrderUpdateWebsocket(accessToken, new OrderUpdateListner() {
+            OrderUpdateWebsocket smartStreamOrderUpdate = new OrderUpdateWebsocket(accessToken, new OrderUpdateListner() {
     /**
      * Check if the websocket is connected or not
      */

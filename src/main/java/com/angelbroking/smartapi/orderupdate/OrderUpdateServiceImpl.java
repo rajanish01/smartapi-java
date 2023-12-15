@@ -4,7 +4,7 @@ import com.angelbroking.smartapi.smartstream.models.SmartStreamError;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class OrderUpdateServiceImpl implements OrderUpdateListner{
+public class OrderUpdateServiceImpl implements OrderUpdateListener {
     @Override
     public void onConnected() {
         // TODO Auto-generated method stub

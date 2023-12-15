@@ -2,14 +2,11 @@ package com.angelbroking.smartapi.orderupdatetest;
 
 import com.angelbroking.smartapi.SmartConnect;
 import com.angelbroking.smartapi.models.User;
-import com.angelbroking.smartapi.orderupdate.OrderUpdateListner;
-import com.angelbroking.smartapi.orderupdate.OrderUpdateWebsocket;
+import com.angelbroking.smartapi.orderupdate.OrderUpdateListener;
+import com.angelbroking.smartapi.orderupdate.SmartStreamOrderUpdate;
 import com.angelbroking.smartapi.smartstream.models.SmartStreamError;
 import com.neovisionaries.ws.client.WebSocketException;
-import com.warrenstrange.googleauth.GoogleAuthenticator;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.Scanner;
@@ -41,7 +38,7 @@ public class OrderUpdateTest {
 
 //    @Test
     public void testOrderUpdate_success() throws WebSocketException {
-        OrderUpdateWebsocket orderUpdateWebsocket = new OrderUpdateWebsocket(accessToken, new OrderUpdateListner() {
+        SmartStreamOrderUpdate smartStreamOrderUpdate = new SmartStreamOrderUpdate(accessToken, new OrderUpdateListener() {
             @Override
             public void onConnected() {
                 log.info("Connected");
@@ -68,7 +65,7 @@ public class OrderUpdateTest {
             }
         });
 
-        orderUpdateWebsocket.connect();
+        smartStreamOrderUpdate.connect();
 
     }
 }

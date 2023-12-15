@@ -2,7 +2,7 @@ package com.angelbroking.smartapi.orderupdate;
 
 import com.angelbroking.smartapi.smartstream.models.SmartStreamError;
 
-public interface OrderUpdateListner {
+public interface OrderUpdateListener {
     void onConnected();
     void onDisconnected();
     void onError(SmartStreamError error);

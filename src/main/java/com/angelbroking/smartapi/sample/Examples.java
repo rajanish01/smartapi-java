@@ -3,8 +3,8 @@ package com.angelbroking.smartapi.sample;
 import com.angelbroking.smartapi.SmartConnect;
 import com.angelbroking.smartapi.http.exceptions.SmartAPIException;
 import com.angelbroking.smartapi.models.*;
-import com.angelbroking.smartapi.orderupdate.OrderUpdateListner;
-import com.angelbroking.smartapi.orderupdate.OrderUpdateWebsocket;
+import com.angelbroking.smartapi.orderupdate.OrderUpdateListener;
+import com.angelbroking.smartapi.orderupdate.SmartStreamOrderUpdate;
 import com.angelbroking.smartapi.smartTicker.*;
 import com.angelbroking.smartapi.smartstream.models.SmartStreamError;
 import com.angelbroking.smartapi.ticker.OnConnect;
@@ -476,7 +476,7 @@ public class Examples {
      * @param accessToken
      */
     public void orderUpdateUsage(String accessToken) {
-        OrderUpdateWebsocket orderUpdateWebsocket = new OrderUpdateWebsocket(accessToken, new OrderUpdateListner() {
+        SmartStreamOrderUpdate smartStreamOrderUpdate = new SmartStreamOrderUpdate(accessToken, new OrderUpdateListener() {
             /**
              * Check if the websocket is connected or not
              */

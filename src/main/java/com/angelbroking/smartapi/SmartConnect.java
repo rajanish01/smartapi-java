@@ -28,13 +28,13 @@ public class SmartConnect {
     private String apiKey;
     private String accessToken;
     private String refreshToken;
+
+    private String feedToken;
     private Routes routes = new Routes();
     private String userId;
     private SmartAPIRequestHandler smartAPIRequestHandler;
 
-    public SmartConnect() {
-
-    }
+    public SmartConnect() {}
 
     public SmartConnect(String apiKey) {
         this.apiKey = apiKey;
@@ -62,10 +62,8 @@ public class SmartConnect {
      * @throws NullPointerException if _apiKey is not found.
      */
     public String getApiKey() throws NullPointerException {
-        if (apiKey != null)
-            return apiKey;
-        else
-            throw new NullPointerException();
+        if (Objects.nonNull(apiKey)) return apiKey;
+        throw new NullPointerException();
     }
 
     /**
@@ -75,10 +73,13 @@ public class SmartConnect {
      * @throws NullPointerException if accessToken is null.
      */
     public String getAccessToken() throws NullPointerException {
-        if (accessToken != null)
-            return accessToken;
-        else
-            throw new NullPointerException();
+        if (Objects.nonNull(accessToken)) return accessToken;
+        throw new NullPointerException();
+    }
+
+    public String getFeedToken() throws NullPointerException {
+        if (Objects.nonNull(feedToken)) return feedToken;
+        throw new NullPointerException();
     }
 
     /**
@@ -88,11 +89,8 @@ public class SmartConnect {
      * @throws NullPointerException if userId is null.
      */
     public String getUserId() throws NullPointerException {
-        if (userId != null) {
-            return userId;
-        } else {
-            throw new NullPointerException();
-        }
+        if (Objects.nonNull(userId)) return userId;
+        throw new NullPointerException();
     }
 
     /**
@@ -111,11 +109,8 @@ public class SmartConnect {
      * @throws NullPointerException if publicToken is null.
      */
     public String getPublicToken() throws NullPointerException {
-        if (refreshToken != null) {
-            return refreshToken;
-        } else {
-            throw new NullPointerException();
-        }
+        if (Objects.nonNull(refreshToken)) return refreshToken;
+        throw new NullPointerException();
     }
 
     /**
@@ -159,9 +154,8 @@ public class SmartConnect {
      * @throws IOException
      */
     public User generateSession(String clientCode, String password, String totp) throws Exception {
-        User user = null;
         smartAPIRequestHandler = new SmartAPIRequestHandler(proxy);
-
+        User user;
         // Create JSON params object needed to be sent to api.
         JSONObject params = new JSONObject();
         params.put("clientcode", clientCode);
@@ -174,6 +168,7 @@ public class SmartConnect {
         String jwtToken = loginResultObject.getJSONObject("data").getString("jwtToken");
         String refreshToken = loginResultObject.getJSONObject("data").getString("refreshToken");
         String feedToken = loginResultObject.getJSONObject("data").getString("feedToken");
+        this.feedToken = feedToken;
         String url = routes.get("api.user.profile");
         user = new User().parseResponse(smartAPIRequestHandler.getRequest(this.apiKey, url, jwtToken));
         user.setAccessToken(jwtToken);
