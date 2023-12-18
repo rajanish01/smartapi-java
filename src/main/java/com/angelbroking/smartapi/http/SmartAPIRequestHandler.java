@@ -44,7 +44,7 @@ public class SmartAPIRequestHandler {
         }
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
         if (SmartConnect.ENABLE_LOGGING) {
             client = builder.addInterceptor(logging).build();
         } else {
