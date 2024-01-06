@@ -169,4 +169,33 @@ public class SmartStreamOrderUpdate {
         ws.connect();
         log.info("connected to uri: {}", wsuri);
     }
+
+    /**
+     * Returns true if websocket connection is open.
+     *
+     * @return boolean
+     */
+    public boolean isConnectionOpen() {
+        return (ws != null) && ws.isOpen();
+    }
+
+    /**
+     * Returns true if websocket connection is closed.
+     *
+     * @return boolean
+     */
+    public boolean isConnectionClosed() {
+        return !isConnectionOpen();
+    }
+
+    /**
+     * Disconnects websocket connection.
+     */
+    public void disconnect() {
+
+        if (ws != null) {
+            stopPingTimer();
+            ws.disconnect();
+        }
+    }
 }
