@@ -22,7 +22,7 @@ import static com.angelbroking.smartapi.utils.Constants.*;
 @Slf4j
 public class SmartConnect {
     public static SessionExpiryHook sessionExpiryHook = null;
-    public static boolean ENABLE_LOGGING = true;
+    public static boolean ENABLE_LOGGING = false;
     private Proxy proxy = null;
     @Setter
     private String apiKey;
