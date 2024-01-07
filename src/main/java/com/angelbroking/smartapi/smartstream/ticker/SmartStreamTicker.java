@@ -17,7 +17,6 @@ import java.nio.ByteOrder;
 import java.time.LocalDateTime;
 import java.util.*;
 
-
 @Slf4j
 public class SmartStreamTicker {
 

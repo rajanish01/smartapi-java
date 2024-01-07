@@ -34,7 +34,7 @@ public class ByteUtils {
 		for (int i = 0; i < CHAR_ARRAY_SIZE; i++) {
 			token[i] = byteBuffer.get(2 + i);
 		}
-		return new TokenID(ExchangeType.findByValue(byteBuffer.get(1)), new String(token, StandardCharsets.UTF_8));
+		return new TokenID(ExchangeType.findByValue(byteBuffer.get(1)), new String(token, StandardCharsets.UTF_8).trim());
 	}
 	
 	public static SmartApiBBSInfo[] getBestFiveBuyData(ByteBuffer buffer) {
